@@ -4,7 +4,11 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
+
+
 token = str(os.environ.get('TOKEN'))
+admin_id = int(str(os.environ.get('ADMIN_ID')))
+
 
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
@@ -19,7 +23,9 @@ async def download_video(message: types.Message):
     file_id = message.video_note.file_id
     # file = await bot.get_file(file_id) # Получить файл
     # await bot.download_file(file.file_path, f'{file_id}.mp4') # Загрузка файл
-    await bot.send_video_note(message.from_id, file_id)
+    # await bot.send_video_note(message.from_id, file_id)
+    await bot.send_video_note(admin_id, file_id)
+
 
 if __name__ == '__main__':
     executor.start_polling(dp)
